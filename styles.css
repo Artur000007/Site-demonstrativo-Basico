@@ -1,0 +1,135 @@
+/* ============================================================
+   ARQUIVO: styles.css
+   Estilos complementares ao Tailwind (o que o CDN não cobre direto).
+   Para mudar o dourado/âmbar, altere as variáveis em :root
+   (e as cores em tailwind.config, no index.html).
+   ============================================================ */
+
+:root {
+  --ambar: #d99a2b;        /* cor principal de destaque */
+  --ambar-claro: #f0b84a;  /* hover do destaque */
+  --grafite: #171614;      /* fundo escuro */
+  --grafite-claro: #2a2724;
+}
+
+/* Rolagem suave e espaço para o cabeçalho fixo ao navegar pelas âncoras */
+html { scroll-behavior: smooth; }
+section[id] { scroll-margin-top: 64px; }
+
+::selection { background: var(--ambar); color: var(--grafite); }
+
+/* Foco visível para navegação por teclado */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--ambar-claro);
+  outline-offset: 3px;
+}
+
+/* Botão principal âmbar (texto escuro para manter o contraste) */
+.btn-ambar {
+  background: var(--ambar);
+  color: var(--grafite);
+  transition: background-color .2s ease, transform .1s ease;
+}
+.btn-ambar:hover { background: var(--ambar-claro); }
+.btn-ambar:active { transform: translateY(1px); }
+
+/* Faixa lateral âmbar nos blocos de diferenciais */
+.borda-ambar {
+  border-left: 3px solid var(--ambar);
+  padding-left: 1.25rem;
+}
+
+/* ---------- Poste de barbeiro (elemento marcante do hero) ----------
+   Mobile: faixa horizontal fina no topo do hero.
+   Desktop (lg): coluna vertical à direita. */
+.pole {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--ambar) 0 12px,
+    var(--grafite) 12px 24px,
+    #efe9df 24px 36px,
+    var(--grafite) 36px 48px
+  );
+  background-size: 68px 68px;
+  animation: poste 3s linear infinite;
+}
+@keyframes poste {
+  to { background-position: 68px 0; }
+}
+@media (min-width: 1024px) {
+  .pole {
+    top: 0;
+    bottom: 0;
+    left: auto;
+    right: 6%;
+    width: 30px;
+    height: 100%;
+  }
+}
+
+/* ---------- Linhas da lista de serviços (estilo cardápio) ---------- */
+.servico {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid var(--grafite-claro);
+  border-left: 3px solid transparent;
+  transition: background-color .2s ease, border-color .2s ease;
+}
+@media (min-width: 640px) {
+  .servico {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+  }
+}
+.servico[data-selecionado="true"] {
+  background: rgba(217, 154, 43, .08);
+  border-left-color: var(--ambar);
+}
+.servico .preco {
+  font-family: Fraunces, Georgia, serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--ambar-claro);
+  line-height: 1;
+}
+.servico .btn-escolher {
+  min-height: 44px;            /* alvo de toque confortável no celular */
+  min-width: 112px;
+  padding: .5rem 1rem;
+  border-radius: .25rem;
+  font-weight: 600;
+  border: 1px solid #a8a093;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+.servico .btn-escolher:hover { border-color: var(--ambar); }
+.servico[data-selecionado="true"] .btn-escolher {
+  background: var(--ambar);
+  border-color: var(--ambar);
+  color: var(--grafite);
+}
+
+/* ---------- Horários de funcionamento ---------- */
+.linha-horario {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--grafite-claro);
+}
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pole { animation: none; }
+  * { transition: none !important; }
+}

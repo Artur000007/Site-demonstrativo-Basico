@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     ARQUIVO: index.html
+     Landing page da Barbearia Navalha & Estilo.
+     Textos fixos ficam aqui. Preços, serviços, WhatsApp, endereço,
+     horários e link do Maps ficam no topo do arquivo script.js.
+     ============================================================ -->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barbearia Navalha &amp; Estilo | Agende seu horário</title>
+  <meta name="description" content="Corte degradê, barba com toalha quente e combo completo. Agende seu horário pelo WhatsApp na Barbearia Navalha & Estilo.">
+  <meta name="theme-color" content="#171614">
+
+  <!-- Fontes (Google Fonts). Se falharem, o navegador usa as fontes de reserva. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN + cores e fontes da marca (edite aqui para trocar a paleta) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            grafite: { 900: '#171614', 800: '#1f1d1b', 700: '#2a2724' },
+            ambar: { 400: '#f0b84a', 500: '#d99a2b', 600: '#b97d17' },
+            osso: '#efe9df',
+            cinza: '#a8a093'
+          },
+          fontFamily: {
+            display: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['"Instrument Sans"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Estilos complementares -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-grafite-900 text-osso font-sans antialiased">
+
+  <!-- ===================== Aviso Site Demonstrativo===================== -->
+  <p class="text-xs text-zinc-400 text-center mt-4">
+  <strong>Aviso:</strong> Site demonstrativo para fins de portfólio — preços, avaliações, endereço e dados de contato são fictícios.
+</p>
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="sticky top-0 z-40 bg-grafite-900/95 backdrop-blur border-b border-grafite-700">
+    <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between">
+      <a href="#inicio" class="font-display text-xl font-bold tracking-tight">
+        Navalha <span class="text-ambar-500">&amp;</span> Estilo
+      </a>
+
+      <!-- Menu desktop -->
+      <nav class="hidden md:flex items-center gap-7 text-sm" aria-label="Menu principal">
+        <a href="#servicos" class="hover:text-ambar-400">Serviços</a>
+        <a href="#diferenciais" class="hover:text-ambar-400">Diferenciais</a>
+        <a href="#avaliacoes" class="hover:text-ambar-400">Avaliações</a>
+        <a href="#localizacao" class="hover:text-ambar-400">Onde estamos</a>
+        <a href="#inicio" class="js-wa btn-ambar rounded px-4 py-2 font-semibold" target="_blank" rel="noopener">Agendar</a>
+      </nav>
+
+      <!-- Botão do menu mobile -->
+      <button id="menuBtn" type="button" class="md:hidden p-2 -mr-2" aria-expanded="false" aria-controls="menuMobile" aria-label="Abrir menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+
+    <!-- Menu mobile (aberto/fechado pelo script.js) -->
+    <nav id="menuMobile" class="hidden md:hidden border-t border-grafite-700 bg-grafite-800 px-5 py-3 flex-col" aria-label="Menu mobile">
+      <a href="#servicos" class="block py-3">Serviços</a>
+      <a href="#diferenciais" class="block py-3">Diferenciais</a>
+      <a href="#avaliacoes" class="block py-3">Avaliações</a>
+      <a href="#localizacao" class="block py-3">Onde estamos</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section id="inicio" class="relative overflow-hidden">
+      <!-- Poste de barbeiro em CSS: faixa fina no mobile, vertical no desktop -->
+      <div class="pole" aria-hidden="true"></div>
+
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24 lg:py-32 lg:pr-24">
+        <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight max-w-3xl">
+          Barba feita, corte afiado e nada de fila.
+        </h1>
+        <p class="mt-6 text-lg text-cinza max-w-xl leading-relaxed">
+          Agende em menos de um minuto pelo WhatsApp e chegue na hora marcada. Cada cliente tem o seu horário.
+        </p>
+        <div class="mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4">
+          <a href="#inicio" class="js-wa btn-ambar rounded px-7 py-4 text-center font-semibold text-lg" target="_blank" rel="noopener">
+            Agendar no WhatsApp
+          </a>
+          <a href="#servicos" class="rounded px-7 py-4 text-center font-semibold text-lg border border-cinza/50 hover:border-ambar-500 hover:text-ambar-400">
+            Ver serviços e preços
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SERVIÇOS E PREÇOS ===================== -->
+    <!-- A lista abaixo é montada pelo script.js a partir da constante SERVICOS -->
+    <section id="servicos" class="bg-grafite-800 py-16 sm:py-24">
+      <div class="mx-auto max-w-4xl px-5">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold">Serviços e preços</h2>
+        <p class="mt-3 text-cinza">Toque em “Escolher” e o serviço vai junto na mensagem do WhatsApp.</p>
+
+        <ul id="listaServicos" class="mt-10 border-t border-grafite-700"></ul>
+
+        <!-- Resumo do serviço escolhido -->
+        <div class="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded border border-grafite-700 bg-grafite-900 p-5">
+          <p id="resumoServico" class="text-osso" aria-live="polite">Nenhum serviço escolhido ainda.</p>
+          <div class="flex gap-3">
+            <button id="limparServico" type="button" class="hidden rounded px-4 py-3 border border-cinza/50 hover:border-ambar-500">Limpar</button>
+            <a href="#servicos" class="js-wa btn-ambar rounded px-5 py-3 font-semibold text-center flex-1 sm:flex-none" target="_blank" rel="noopener">Agendar no WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DIFERENCIAIS / SOBRE ===================== -->
+    <section id="diferenciais" class="py-16 sm:py-24">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold max-w-2xl">Uma barbearia onde você relaxa e sai com o corte que pediu.</h2>
+
+        <div class="mt-12 grid gap-10 sm:grid-cols-2">
+          <div class="borda-ambar">
+            <h3 class="font-display text-xl font-semibold">Ambiente</h3>
+            <p class="mt-2 text-cinza leading-relaxed">Cadeiras de couro, música em volume baixo e café ou água na espera. Um lugar para parar um pouco.</p>
+          </div>
+          <div class="borda-ambar">
+            <h3 class="font-display text-xl font-semibold">Higiene</h3>
+            <p class="mt-2 text-cinza leading-relaxed">Ferramentas esterilizadas a cada cliente, capa e toalha limpas, lâmina nova na barba.</p>
+          </div>
+          <div class="borda-ambar">
+            <h3 class="font-display text-xl font-semibold">Pontualidade</h3>
+            <p class="mt-2 text-cinza leading-relaxed">Atendimento com hora marcada. Você chega, senta e é atendido no horário combinado.</p>
+          </div>
+          <div class="borda-ambar">
+            <h3 class="font-display text-xl font-semibold">Barbeiros experientes</h3>
+            <p class="mt-2 text-cinza leading-relaxed">Equipe com anos de cadeira em degradê, barba clássica e acabamento na navalha.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AVALIAÇÕES ===================== -->
+    <!-- ATENÇÃO: depoimentos de exemplo. Troque por avaliações reais dos seus clientes. -->
+    <section id="avaliacoes" class="bg-grafite-800 py-16 sm:py-24">
+      <div class="mx-auto max-w-6xl px-5">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold">O que os clientes dizem</h2>
+
+        <div class="mt-10 grid gap-8 md:grid-cols-3">
+          <figure>
+            <blockquote class="text-lg leading-relaxed">“Marquei pelo WhatsApp, cheguei e já fui atendido. O degradê ficou impecável.”</blockquote>
+            <figcaption class="mt-4 text-sm text-cinza">Rafael M., cliente há 3 anos</figcaption>
+          </figure>
+          <figure>
+            <blockquote class="text-lg leading-relaxed">“A toalha quente com a barba é outro nível. Saio de lá renovado toda semana.”</blockquote>
+            <figcaption class="mt-4 text-sm text-cinza">Anderson L., cliente há 1 ano</figcaption>
+          </figure>
+          <figure>
+            <blockquote class="text-lg leading-relaxed">“Levo meu filho e meu pai. Os três saem satisfeitos, o lugar é limpo e organizado.”</blockquote>
+            <figcaption class="mt-4 text-sm text-cinza">Carlos E., cliente há 5 anos</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== LOCALIZAÇÃO E HORÁRIOS ===================== -->
+    <!-- Endereço, horários e link do Maps são preenchidos pelo script.js (constante CONFIG) -->
+    <section id="localizacao" class="py-16 sm:py-24">
+      <div class="mx-auto max-w-6xl px-5 grid gap-12 md:grid-cols-2">
+        <div>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold">Onde estamos</h2>
+          <address class="mt-6 not-italic text-lg leading-relaxed">
+            <span data-bind="endereco">Endereço</span><br>
+            <span class="text-cinza" data-bind="cidade">Cidade</span>
+          </address>
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <a href="#localizacao" class="js-maps rounded px-6 py-3 text-center font-semibold border border-cinza/50 hover:border-ambar-500 hover:text-ambar-400" target="_blank" rel="noopener">Abrir no Google Maps</a>
+            <a href="#localizacao" class="js-wa btn-ambar rounded px-6 py-3 text-center font-semibold" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-display text-2xl font-semibold">Horário de atendimento</h3>
+          <dl id="listaHorarios" class="mt-6 border-t border-grafite-700"></dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== RODAPÉ ===================== -->
+  <footer class="border-t border-grafite-700 py-8 text-sm text-cinza">
+    <div class="mx-auto max-w-6xl px-5 flex flex-col sm:flex-row justify-between gap-2">
+      <p>© <span id="ano">2026</span> <span data-bind="nome">Barbearia Navalha &amp; Estilo</span>. Todos os direitos reservados.</p>
+      <p data-bind="endereco">Endereço</p>
+    </div>
+  </footer>
+
+  <!-- ===================== BOTÃO FLUTUANTE DO WHATSAPP ===================== -->
+  <a href="#inicio" class="js-wa fixed z-50 right-4 bottom-4 sm:right-6 sm:bottom-6 flex items-center gap-2 rounded-full bg-[#25d366] text-grafite-900 shadow-lg h-14 min-w-14 px-4 justify-center font-semibold hover:brightness-110"
+     target="_blank" rel="noopener" aria-label="Agendar pelo WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20.5l1.6-5.4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+    <span class="hidden sm:inline">Agendar</span>
+  </a>
+
+  <!-- Interatividade e configurações editáveis -->
+  <script src="script.js"></script>
+</body>
+</html>
