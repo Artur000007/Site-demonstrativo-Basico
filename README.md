@@ -20,4 +20,4 @@ Landing page responsiva desenvolvida para apresentação de serviços, horários
 
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/Artur000007/Site-demonstrativo-B-sico.git](https://github.com/Artur000007/Site-demonstrativo-B-sico.git)
+   git clone [https://github.com/Artur000007/Site-demonstrativo-Basico.git](https://github.com/Artur000007/Site-demonstrativo-Basico.git)
