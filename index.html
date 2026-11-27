@@ -45,10 +45,6 @@
 
 <body class="bg-grafite-900 text-osso font-sans antialiased">
 
-  <!-- ===================== Aviso Site Demonstrativo===================== -->
-  <p class="text-xs text-zinc-400 text-center mt-4">
-  <strong>Aviso:</strong> Site demonstrativo para fins de portfólio — preços, avaliações, endereço e dados de contato são fictícios.
-</p>
   <!-- ===================== CABEÇALHO ===================== -->
   <header class="sticky top-0 z-40 bg-grafite-900/95 backdrop-blur border-b border-grafite-700">
     <div class="mx-auto max-w-6xl px-5 h-16 flex items-center justify-between">
@@ -61,6 +57,7 @@
         <a href="#servicos" class="hover:text-ambar-400">Serviços</a>
         <a href="#diferenciais" class="hover:text-ambar-400">Diferenciais</a>
         <a href="#avaliacoes" class="hover:text-ambar-400">Avaliações</a>
+        <a href="#pre-agendamento" class="hover:text-ambar-400">Contato</a>
         <a href="#localizacao" class="hover:text-ambar-400">Onde estamos</a>
         <a href="#inicio" class="js-wa btn-ambar rounded px-4 py-2 font-semibold" target="_blank" rel="noopener">Agendar</a>
       </nav>
@@ -76,6 +73,7 @@
       <a href="#servicos" class="block py-3">Serviços</a>
       <a href="#diferenciais" class="block py-3">Diferenciais</a>
       <a href="#avaliacoes" class="block py-3">Avaliações</a>
+      <a href="#pre-agendamento" class="block py-3">Contato</a>
       <a href="#localizacao" class="block py-3">Onde estamos</a>
     </nav>
   </header>
@@ -173,6 +171,40 @@
       </div>
     </section>
 
+    <!-- ===================== PRÉ-AGENDAMENTO / SOLICITAR CONTATO ===================== -->
+    <!-- O formulário grava na tabela "leads" do Supabase (colunas: nome, whatsapp, servico).
+         A lógica de envio está no script.js; as credenciais vêm do config.js (fora do Git). -->
+    <section id="pre-agendamento" class="bg-grafite-800 py-16 sm:py-24">
+      <div class="mx-auto max-w-2xl px-5">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold">Prefere que a gente chame você?</h2>
+        <p class="mt-3 text-cinza">Deixe seu nome e WhatsApp. Retornamos para confirmar o melhor horário.</p>
+
+        <form id="formLead" class="mt-10 grid gap-5" novalidate>
+          <div>
+            <label for="leadNome" class="block mb-2 font-medium">Seu nome</label>
+            <input id="leadNome" name="nome" type="text" class="campo" maxlength="80" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="leadWhatsapp" class="block mb-2 font-medium">Seu WhatsApp (com DDD)</label>
+            <input id="leadWhatsapp" name="whatsapp" type="tel" class="campo" inputmode="numeric" placeholder="11 99999-0000" autocomplete="tel" required>
+          </div>
+          <div>
+            <label for="leadServico" class="block mb-2 font-medium">Serviço desejado</label>
+            <select id="leadServico" name="servico" class="campo" required></select>
+          </div>
+
+          <!-- Campo isca contra robôs: pessoas não veem nem preenchem -->
+          <div class="isca" aria-hidden="true">
+            <label for="leadSite">Não preencha este campo</label>
+            <input id="leadSite" name="site" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button id="leadEnviar" type="submit" class="btn-ambar rounded px-7 py-4 font-semibold text-lg">Solicitar contato</button>
+          <p id="leadStatus" class="min-h-6" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
     <!-- ===================== LOCALIZAÇÃO E HORÁRIOS ===================== -->
     <!-- Endereço, horários e link do Maps são preenchidos pelo script.js (constante CONFIG) -->
     <section id="localizacao" class="py-16 sm:py-24">
@@ -212,6 +244,10 @@
     <span class="hidden sm:inline">Agendar</span>
   </a>
 
+  <!-- SDK oficial do Supabase (v2) via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- config.js é gerado no build da Vercel (ou copiado de config.example.js em ambiente local) -->
+  <script src="config.js"></script>
   <!-- Interatividade e configurações editáveis -->
   <script src="script.js"></script>
 </body>

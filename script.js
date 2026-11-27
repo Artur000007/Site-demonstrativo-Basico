@@ -169,6 +169,9 @@ function atualizarSelecao() {
     resumo.textContent = "Nenhum serviço escolhido ainda.";
     limpar.classList.add("hidden");
   }
+  // Reflete o serviço escolhido no formulário de pré-agendamento
+  const seletor = document.getElementById("leadServico");
+  if (seletor && servicoEscolhido) seletor.value = servicoEscolhido.nome;
   atualizarLinks();
 }
 
@@ -192,6 +195,109 @@ function iniciarMenuMobile() {
   menu.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", fechar); });
 }
 
+/* ---------- 3) PRÉ-AGENDAMENTO (Supabase) ----------
+   As credenciais NÃO ficam neste arquivo. Elas vêm de config.js, que define
+   window.APP_CONFIG = { SUPABASE_URL, SUPABASE_ANON_KEY }.
+   Tabela esperada: leads (nome, whatsapp, servico). */
+
+const SERVICO_INDEFINIDO = "Ainda não sei"; // opção extra do formulário (edite se quiser)
+let clienteSupabase = null;
+
+// Cria o cliente do Supabase uma única vez. Retorna null se faltar config ou SDK.
+function obterSupabase() {
+  if (clienteSupabase) return clienteSupabase;
+  const cfg = window.APP_CONFIG || {};
+  if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY || !window.supabase) return null;
+  clienteSupabase = window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  return clienteSupabase;
+}
+
+// Preenche o <select> com os serviços da constante SERVICOS
+function montarOpcoesServico() {
+  const seletor = document.getElementById("leadServico");
+  const opcoes = [{ valor: "", texto: "Selecione um serviço" }]
+    .concat(SERVICOS.map(function (s) { return { valor: s.nome, texto: s.nome }; }))
+    .concat([{ valor: SERVICO_INDEFINIDO, texto: SERVICO_INDEFINIDO }]);
+  opcoes.forEach(function (o) {
+    const opt = document.createElement("option");
+    opt.value = o.valor;
+    opt.textContent = o.texto;
+    seletor.appendChild(opt);
+  });
+}
+
+// Mostra mensagem de sucesso ou erro abaixo do formulário
+function mostrarStatusLead(texto, tipo) {
+  const el = document.getElementById("leadStatus");
+  el.textContent = texto;
+  el.dataset.tipo = tipo || "";
+}
+
+// Marca ou desmarca um campo como inválido
+function marcarCampo(campo, invalido) {
+  campo.setAttribute("aria-invalid", invalido ? "true" : "false");
+}
+
+// Valida, envia o lead ao Supabase e informa o resultado
+async function enviarLead(evento) {
+  evento.preventDefault();
+  const form = evento.target;
+  const botao = document.getElementById("leadEnviar");
+  const campoNome = document.getElementById("leadNome");
+  const campoZap = document.getElementById("leadWhatsapp");
+  const campoServico = document.getElementById("leadServico");
+
+  // Robôs preenchem o campo isca: finge sucesso e não envia nada
+  if (document.getElementById("leadSite").value) {
+    form.reset();
+    mostrarStatusLead("Recebemos seu pedido! Em breve entramos em contato.", "ok");
+    return;
+  }
+
+  const nome = campoNome.value.trim();
+  const whatsapp = campoZap.value.replace(/\D/g, ""); // guarda só os números
+  const servico = campoServico.value;
+
+  const nomeOk = nome.length >= 2;
+  const zapOk = /^\d{10,13}$/.test(whatsapp); // DDD + número (com ou sem 55)
+  const servicoOk = servico !== "";
+  marcarCampo(campoNome, !nomeOk);
+  marcarCampo(campoZap, !zapOk);
+  marcarCampo(campoServico, !servicoOk);
+
+  if (!nomeOk || !zapOk || !servicoOk) {
+    mostrarStatusLead("Confira os campos destacados: nome, WhatsApp com DDD e serviço.", "erro");
+    return;
+  }
+
+  const cliente = obterSupabase();
+  if (!cliente) {
+    mostrarStatusLead("O formulário está indisponível no momento. Use o botão de WhatsApp para agendar.", "erro");
+    return;
+  }
+
+  botao.disabled = true;
+  mostrarStatusLead("Enviando...", "");
+  try {
+    // Sem .select() de propósito: a política da tabela só permite inserir, não ler.
+    const resposta = await cliente.from("leads").insert({ nome: nome, whatsapp: whatsapp, servico: servico });
+    if (resposta.error) throw resposta.error;
+    form.reset();
+    servicoEscolhido = null;
+    atualizarSelecao();
+    mostrarStatusLead("Recebemos seu pedido! Em breve entramos em contato pelo WhatsApp.", "ok");
+  } catch (erro) {
+    console.error("Erro ao enviar lead:", erro);
+    mostrarStatusLead("Não conseguimos enviar agora. Tente de novo ou chame no WhatsApp.", "erro");
+  } finally {
+    botao.disabled = false;
+  }
+}
+
+function iniciarFormulario() {
+  document.getElementById("formLead").addEventListener("submit", enviarLead);
+}
+
 // Inicialização quando a página carrega
 document.addEventListener("DOMContentLoaded", function () {
   preencherTextos();
@@ -202,5 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
     servicoEscolhido = null;
     atualizarSelecao();
   });
+  montarOpcoesServico();
+  iniciarFormulario();
   atualizarSelecao(); // também define os links iniciais de WhatsApp e Maps
 });

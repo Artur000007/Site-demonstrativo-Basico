@@ -1,0 +1,6 @@
+.env 
+# Gerado no build da Vercel / criado localmente. Não versionar.
+config.js
+.vercel
+node_modules
+.DS_Store
