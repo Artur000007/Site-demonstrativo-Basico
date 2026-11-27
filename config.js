@@ -6,6 +6,6 @@
    Na Vercel, o config.js é gerado automaticamente no build.
    ============================================================ */
 window.APP_CONFIG = {
-  SUPABASE_URL: "COLE_AQUI_A_URL_DO_PROJETO",
-  SUPABASE_ANON_KEY: "COLE_AQUI_A_CHAVE_ANON"
+  SUPABASE_URL: "https://stckrrvckhpmjoipuuic.supabase.co/rest/v1/",
+  SUPABASE_ANON_KEY: "sb_publishable_oWMpoODcMKEgJGd10bPziA__-Z2Z7P-"
 };
