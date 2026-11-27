@@ -133,3 +133,64 @@ button:focus-visible {
   .pole { animation: none; }
   * { transition: none !important; }
 }
+
+/* ---------- Formulário de pré-agendamento ---------- */
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .pole { animation: none; }
+  * { transition: none !important; }
+}
+
+/* ---------- Formulário de pré-agendamento ---------- */
+.campo,
+form input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+form select,
+form textarea {
+  width: 100%;
+  min-height: 48px;                 /* alvo de toque confortável */
+  padding: .75rem 1rem;
+  background-color: var(--grafite) !important;
+  color: #efe9df !important;
+  border: 1px solid #5a554e;
+  border-radius: .25rem;
+  font: inherit;
+  color-scheme: dark;               /* força opções nativas e ícones em tema escuro */
+}
+
+.campo::placeholder,
+form input::placeholder {
+  color: #9c958b !important;
+  opacity: 1;
+}
+
+.campo option,
+form select option {
+  background-color: var(--grafite);
+  color: #efe9df;
+}
+
+/* Corrige o fundo branco que o preenchimento automático (autofill) do navegador coloca */
+.campo:-webkit-autofill,
+.campo:-webkit-autofill:hover,
+.campo:-webkit-autofill:focus,
+form input:-webkit-autofill {
+  -webkit-text-fill-color: #efe9df !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--grafite) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.campo:focus,
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: var(--ambar);
+}
+
+.campo[aria-invalid="true"] { border-color: #e5786d; }
+#leadEnviar:disabled { opacity: .6; cursor: not-allowed; }
+#leadStatus[data-tipo="ok"] { color: #8fd19e; }
+#leadStatus[data-tipo="erro"] { color: #f0a59c; }
+
+/* Campo isca anti-robô: fora da tela, mas presente no HTML */
+.isca { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
